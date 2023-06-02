@@ -7,22 +7,27 @@ import java.awt.event.MouseEvent;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import ui.PauseOverlay;
 
 public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
+	private boolean paused=false;
+	private PauseOverlay pauseOverlay;
+	
+	
 	public Playing(Game game) {
 		super(game);
 		initClasses();
 		
 	}
 	
-	
-	
+
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int) (40 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+		pauseOverlay= new PauseOverlay(this);
 	}
 		
 
@@ -30,9 +35,13 @@ public class Playing extends State implements Statemethods {
 
 		@Override
 		public void update() {
-			// TODO Auto-generated method stub
+		if(!paused) {
 			levelManager.update();
 			player.update();
+		}else {
+			pauseOverlay.update();
+		}
+			
 		}
 
 
@@ -42,6 +51,9 @@ public class Playing extends State implements Statemethods {
 			// TODO Auto-generated method stub
 			levelManager.draw(g);
 			player.render(g);
+			
+			if(paused)
+			pauseOverlay.draw(g);
 			
 		}
 
@@ -55,11 +67,15 @@ public class Playing extends State implements Statemethods {
 
 		}
 
-
+		public void mouseDragged(MouseEvent e) {
+			if(paused)
+				pauseOverlay.mouseDragged(e);
+		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
+			if(paused)
+				pauseOverlay.mousePressed(e);
 			
 		}
 
@@ -67,7 +83,8 @@ public class Playing extends State implements Statemethods {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
+			if(paused)
+				pauseOverlay.mouseReleased(e);
 			
 		}
 
@@ -75,7 +92,8 @@ public class Playing extends State implements Statemethods {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
+			if(paused)
+				pauseOverlay.mouseMoved(e);
 			
 		}
 
@@ -96,8 +114,8 @@ public class Playing extends State implements Statemethods {
 			case KeyEvent.VK_SPACE:
 				player.setJump(true);
 				break;
-			case KeyEvent.VK_BACK_SPACE:
-			Gamestate.state=Gamestate.MENU;
+			case KeyEvent.VK_ESCAPE:
+			paused=!paused;
 			break;
 		
 			}
@@ -121,6 +139,9 @@ public class Playing extends State implements Statemethods {
 				player.setJump(false);
 				break;
 			}
+		}
+		public void unpauseGame() {
+			paused=false;
 		}
 		public void windowFocusLost() {
 			player.resetDirBooleans();
