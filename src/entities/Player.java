@@ -17,8 +17,8 @@ public class Player extends Entity {
 	private boolean left, up, right, down, jump;
 	private float playerSpeed = 2.0f;
 	private int[][] lvlData;
-	private float xDrawOffset = 21 * Game.SCALE;
-	private float yDrawOffset = 4 * Game.SCALE;
+	private float xDrawOffset = 7 * Game.SCALE;
+	private float yDrawOffset = 5 * Game.SCALE;
 	
 	//jumping and gravity
 	private float airSpeed = 0f;
@@ -163,10 +163,10 @@ public class Player extends Entity {
 		
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-		animations = new BufferedImage[9][6];
+		animations = new BufferedImage[7][8];
 		for (int j = 0; j < animations.length; j++)
 			for (int i = 0; i < animations[j].length; i++)
-				animations[j][i] = img.getSubimage(i * 40, j * 15, 40, 40);
+				animations[j][i] = img.getSubimage(i * 40, j * 40, 40, 40);
 
 	}
 
