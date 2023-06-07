@@ -92,6 +92,7 @@ public class Player extends Entity {
 		updateAttackBox();
 
 		updatePos();
+		
 		if (moving) {
 			checkPotionTouched();
 			checkSpikesTouched();
