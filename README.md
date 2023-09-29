@@ -40,5 +40,7 @@ Controls
 Use the following controls to navigate and control your cat in the game:
 
 Arrow Keys: Move the cat left or right.
+
 Spacebar: Jump.
+
 E: Attack enemies with your cat's claws.
